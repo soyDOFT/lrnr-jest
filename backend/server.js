@@ -33,7 +33,7 @@ app.get('/quiz', async (req, res) => {
 })
 
 app.get('/results', async (req, res) => {
-    const { question, style, level, answer } = req.query;
+    const { question, style, level } = req.query;
     let chatCompletion = {};
     try {
         chatCompletion = await chatGPT(
@@ -49,7 +49,7 @@ app.get('/results', async (req, res) => {
             (Yes or No) (Explanation). 
             ...
             
-            Ensure it is obvious that you are ${style} and that a(n) ${level} could answer the question.
+            Ensure it is obvious that you are ${style} and that the question is graded according to a(n) ${level}.
             `},
         { role:"user", content: "Evaluate the response."}
         ]);
