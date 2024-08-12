@@ -10,9 +10,9 @@ export default function Quiz() {
     };
     const [ index, setIndex ] = useState(0);
     const [ answers, setAnswers ] = useState([]);
-    const finalQuestion = quiz.questions.length - 1;
     const [ responses, setResponses ] = useState(['fdsafdsaff', 'fdasfdsafasf']);
     const [ isFinished, setIsFinished ] = useState(false);
+    const finalQuestion = quiz.questions.length - 1;
 
     const answerHandler = (e) => {
         answers[index] = e.target.value;
