@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-// import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css';
+
 
 
 
@@ -12,7 +13,7 @@ import M from 'materialize-css';
 
 
 function QuizzForm() {
-    // const navigate = useNavigate(); ///store the useNavigate functioin in variable navigate
+    const navigate = useNavigate(); ///store the useNavigate functioin in variable navigate
     const [formData, setFormData] = useState({
         topic: '',
         expertise: '',
@@ -39,15 +40,32 @@ function QuizzForm() {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-        // Validation: Check if all fields are filled
-        if (Object.values(formData).some(value => value === '')) {
-            alert('Please fill all fields');
-            return;
+        //Validation: Check if all fields are filled
+        // if (Object.values(formData).some(value => value === '')) {
+        //     alert('Please fill all fields');
+        //     return;
+    
+
+        try{
+        const response = await fetch('http://localhost:8000/api/quiz', {
+            method:'POST',
+            headers:{
+                'Content-Type': 'appplication/json',
+            },
+            body:JSON.stringify(formData),//sending over form data in the form of json data
+        });
+        if(!response.ok){
+            throw new Error('Failure to fetch data from local host');
         }
 
+        navigate('/quiz', { state: { formData } });//navigate to the quizz page with the form datat 
+    }catch(error){
+        console.error('Erro in handleSubmit:', error);//will send message if data is not properly sent to the form.
+    }
+};
+
         // // would be navigating to the results page with the formData
-        // navigate('/results', { state: { formData } });
-    };
+    
 
     return (
         <div className="container">
