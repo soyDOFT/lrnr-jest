@@ -6,6 +6,7 @@ import Quiz from './pages/Quiz'
 import Home from './pages/Home';
 import Account from './pages/Account';
 import QuizzForm from './pages/QuizzForm';
+import Results from './pages/Results'
 
 function App() {
   useEffect(() => {M.AutoInit();}, [])
@@ -16,6 +17,7 @@ function App() {
         <Route path="/quiz" element={<Quiz/>}/>
         <Route path="/account" element={<Account/>}/>
         <Route path="/quizform" element={<QuizzForm/>}/>
+        <Route path="/results" element={<Results/>}/>
       </Routes>
     </BrowserRouter>
   )
