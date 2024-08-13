@@ -8,6 +8,8 @@ const app = express();
 const router = express.Router();
 app.use('/api', router);
 
+const PORT = process.env.PORT || 8000;
+
 app.get('/quiz', async (req, res) => {
     const { topic, level, questionNum, style } = req.query;
 
