@@ -1,15 +1,15 @@
-import React from 'react'
 import '../styles/Header.css'
+import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
     <div>
       <nav>
         <div className="nav-wrapper">
-        <a href="#" className="brand-logo">lrnr</a>
+        <a href="/" className="brand-logo">lrnr</a>
         <ul id="nav-mobile" className="right hide-on-med-and-down">
-        <li><a href="badges.html">Account</a></li>
-        <li><a href="collapsible.html">Quiz Generation</a></li>
+        <li><Link to="/account"></Link>Account</li>
+        <li><Link to="/quizforms">Quiz Generation</Link></li>
       </ul>
     </div>
   </nav>
