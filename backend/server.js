@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const OpenAI = require('openai');
-const client = new OpenAI({apiKey: process.env.OPENAI_KEY || 'sk-24XRUcKS9ho9U8yoQDhUjrrrM-5PVUUt_D6qD_80j3T3BlbkFJ_0w0YSjNevPH69NxIuD3FxIdOh8pEvvMWfJT-EhcoA'})
+const client = new OpenAI({apiKey: process.env.OPENAI_KEY})
 
 const app = express();
 const router = express.Router();
