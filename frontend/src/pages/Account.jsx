@@ -1,6 +1,5 @@
 import React from "react";
 import "../styles/account.css";
-
 //import the materialize css file
 import "materialize-css/dist/css/materialize.min.css";
 
@@ -56,6 +55,7 @@ const Account = () => {
         </div>
       </div>
     </div>
+    
     </>
   );
 };
