@@ -37,33 +37,49 @@ function QuizzForm() {
             [name]: value
         }));
     };
-
     const handleSubmit = async (e) => {
-      e.preventDefault();
-        //Validation: Check if all fields are filled
+        e.preventDefault();
+      
+        // Validation: Check if all fields are filled
         // if (Object.values(formData).some(value => value === '')) {
-        //     alert('Please fill all fields');
-        //     return;
-    
+        //   alert('Please fill all fields');
+        //   return;
+        // }
 
-        try{
-        const response = await fetch('http://localhost:8000/api/quiz', {
-            method:'POST',
-            headers:{
-                'Content-Type': 'application/json',
+
+        //check url to make sure its spelled correclty
+        //console.log results and form to make sure whats being passed along is the correct information
+
+
+        
+      
+        try {
+          const response = await fetch('http://localhost:8000/api/quiz', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
             },
-            body:JSON.stringify(formData),//sending over form data in the form of json data
-        });
-        if(!response.ok){
-            console.log('error');
-            throw new Error('Failure to fetch data from local host');
+            body: JSON.stringify(formData), // Sending form data in JSON format
+          });
+      
+          console.log(response);//conosle logging th response frmo fetching from the localhost to see what us being fetchede
+          
+          //the code stops here because the reosonse is not ok/ can not fetch from the url.
+          if (!response.ok) { // Check if the response is not OK
+            console.error(`HTTP error! Status: ${response.status}`);
+            throw new Error('Failed to submit form data');
+          }
+      
+          const responseData = await response.json(); // Process the JSON data from the response
+          console.log(responseData);
+      
+          navigate('/quiz', { state: { formData } }); // Navigate with formData and responseData
+      
+        } catch (error) {
+          console.error('Error in handleSubmit:', error); // Log the error message
         }
-
-        navigate('/quiz', { state: { formData } });//navigate to the quizz page with the form datat 
-    }catch(error){
-        console.error('Erro in handleSubmit:', error);//will send message if data is not properly sent to the form.
-    }
-};
+      };
+      
 
         // // would be navigating to the results page with the formData
     

@@ -12,7 +12,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 8000;
 
-router.get('/quiz', async (req, res) => {
+router.post('/quiz', async (req, res) => {
     const { topic, level, questionNum, style } = req.query;
     try {
         const chatCompletion = chatGPT(
@@ -62,7 +62,7 @@ router.get('/quiz', async (req, res) => {
     }
 })
 
-router.get('/results', async (req, res) => {
+router.post('/results', async (req, res) => {
     const { question, style, level } = req.query;
     let chatCompletion = {};
     try {
