@@ -50,11 +50,12 @@ function QuizzForm() {
         const response = await fetch('http://localhost:8000/api/quiz', {
             method:'POST',
             headers:{
-                'Content-Type': 'appplication/json',
+                'Content-Type': 'application/json',
             },
             body:JSON.stringify(formData),//sending over form data in the form of json data
         });
         if(!response.ok){
+            console.log('error');
             throw new Error('Failure to fetch data from local host');
         }
 
