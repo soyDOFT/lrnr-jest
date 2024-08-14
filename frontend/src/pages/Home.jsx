@@ -1,5 +1,3 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import React from 'react'
 import '../styles/Home.css'
 import logo from '../../public/lrnr-logo.png'
@@ -7,7 +5,6 @@ import logo from '../../public/lrnr-logo.png'
 export default function Home() {
   return (
     <div>
-      <Header/>
 
 
       <div className="section no-pad-bot" id="index-banner">
@@ -61,8 +58,6 @@ export default function Home() {
     </div>
     <br></br>
   </div>
-
-      <Footer/>
     </div>
   )
 }
