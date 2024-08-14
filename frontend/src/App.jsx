@@ -6,19 +6,23 @@ import Quiz from './pages/Quiz'
 import Home from './pages/Home';
 import Account from './pages/Account';
 import QuizzForms from './pages/QuizzForms';
-import Results from './pages/Results'
+import Results from './pages/Results';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
-  useEffect(() => {M.AutoInit();}, [])
+  useEffect(() => { M.AutoInit(); }, [])
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
-        <Route index element={<Home/>}></Route>
-        <Route path="/quiz" element={<Quiz/>}/>
-        <Route path="/account" element={<Account/>}/>
-        <Route path="/quizforms" element={<QuizzForms/>}/>
-        <Route path="/results" element={<Results/>}/>
+        <Route index element={<Home />}></Route>
+        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/quizforms" element={<QuizzForms />} />
+        <Route path="/results" element={<Results />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
