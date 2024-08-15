@@ -73,7 +73,7 @@ function QuizzForm() {
           const responseData = await response.json(); // Process the JSON data from the response
           console.log(responseData);
       
-          navigate('/quiz', { state: { formData } }); // Navigate with formData and responseData
+          navigate('/quiz', { state: { responseData } }); // Navigate with formData and responseData
       
         } catch (error) {
           console.error('Error in handleSubmit:', error); // Log the error message
