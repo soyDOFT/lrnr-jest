@@ -15,33 +15,29 @@ const PORT = process.env.PORT || 8000;
 
 router.post('/quiz', async (req, res) => {
     const { topic, level, questionNum, style } = req.body;
-    console.log(req.body);
     try {
-        const chatCompletion = chatGPT(
+        const chatCompletion = await chatGPT(
             [{
                 role: "system",
                 content: `
-                Create a ${questionNum} question quiz in the style of ${style}
-                and in a difficulty level of ${level} regarding ${topic} following
-                the format shown below inside the ellipses.
+                Create a ${questionNum} question quiz in a difficulty level of ${level} regarding ${topic}.
+                Strictly follow the format shown below inside the ellipses and replace the words Generated question with the question.
                 
                 ...
-                    ['Generated question 1',
-                    'Generated question 2',
-                    'Generated question 3',
-                    'Generated question n']
+                    question 1,,,question 2,,,question 3,,,question n
                 ...
                 
-                Ensure it is obvious that you are ${style} and that a(n) ${level} could answer the question.
-                Your response should not consist of any other words.
+                Ensure it is obvious that you are Jedi and that a(n) ${level} could answer the question.
+                Your response should not consist of any other words, even a question title, and don't include the ellipses but do include three commas between every question like in the format.
                 `
             }]);
-            console.log(chatCompletion.choices[0].message.content);
+            console.log(chatCompletion.choices[0].message.content.split(',,,'));
+            console.log(typeof chatCompletion.choices[0].message.content.split(',,,'));
             console.log('OUTSIDE');
             res.json({
                 level,
                 style,
-                questions: chatCompletion.choices[0].message.content
+                questions: chatCompletion.choices[0].message.content.split(',,,')
             })
     } catch (err) {
         console.log(err, 'Error: Invalid response');
@@ -55,7 +51,7 @@ router.post('/quiz', async (req, res) => {
 })
 
 router.post('/results', async (req, res) => {
-    const { questions, style, level } = req.body;
+    const { questions, style, level, answers } = req.body;
     let chatCompletion = {};
     try {
         chatCompletion = await chatGPT(
@@ -64,30 +60,27 @@ router.post('/results', async (req, res) => {
             Grade the response to the questions '${questions}' in the style of ${style}
             and grade the response according to the level of a(n) ${level}.
             Grade the response as correct if it is at least half-way correct.
-            Follow the format shown below inside the ellipses.
-            Start with either saying 'Yes' if it's correct or 'No' if it's incorrect inside double quotes.
+            Start with either saying 'Yes' if the response is correct or 'No' if the response does not adequately answer the question.
             Then include a detailed paragraph explaining why it is correct or incorrect.
             Do not include double quotes in the paragraph.
-            Follow the array format shown below inside the ellipses. 
+            
             
             Here are the responses:
             ${answers}
-
+            
+            In your response follow the format shown below inside the ellipses.
+            Strictly follow the format shown below ensuring each explanation is separated with three commas.
             ...
-            ['Yes/No Explanation 1',] 
-            'Yes/No Explanation 2',] 
-            'Yes/No Explanation 3',] 
-            'Yes/No Explanation n'] 
+            Yes/No Explanation to question 1,,,Yes/No Explanation to question 2,,,Yes/No Explanation to question 3,,,Yes/No Explanation to question n,,,
             ...
             
             Ensure it is obvious that you are ${style} and that the question is graded according to a(n) ${level}.
-            Include at least one reference to pop culture that ensures it is obvious to the reader that you are ${level}.
+            Include at least one reference to pop culture per question that ensures it is obvious to the reader that you are ${level}.
 
-            Include no other words.
-            `},
-        { role:"user", content: "Evaluate the response."}
+            Include no other words and do not include ellipses.
+            `}
     ]);
-        const result = chatCompletion.choices[0].message.content;
+        const result = chatCompletion.choices[0].message.content.split(',,,');
         res.json(result);
     } catch (err) {
         console.log(err, 'Error: Invalid response');
@@ -98,19 +91,15 @@ router.post('/results', async (req, res) => {
     }
 })
 
-// app.get('*', (req, res) => {
-//     // res.sendFile(path.join(__dirname, '/dist/', 'index.html'));
-//     console.log('*')
-//     res.status(404).send('Error 404: Page Not Found');
-// });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/dist/', 'index.html'));
+});
 
 async function chatGPT(prompt) {
     return await client.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: prompt,
-        stream: true,
-        temperature: 1,
-        response_format: { type: "text" }
+        temperature: 1
     });
 }
 

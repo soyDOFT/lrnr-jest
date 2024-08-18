@@ -26,6 +26,8 @@ export default function Quiz() {
 
         if (questionIndex === finalQuestion) {
             setIsFinished(true);
+            document.getElementById('msg').innerHTML = 'Loading...';
+            document.getElementById('quiz').style.display = 'none';
         }
     }
 
@@ -50,10 +52,6 @@ export default function Quiz() {
                     },
                     body: JSON.stringify({...formData, questions: responseData.questions, answers}), // Sending form data in JSON format
                 });
-                // const results = [
-                    //     'No this is wrong',
-                    //     'Yes this is correct dfnsajuifhbsadfjkuhda sfjhsjadf jdsahf'
-                    // ];
                     
                 if (!response.ok) { // Check if the response is not OK
                     console.error(`HTTP error! Status: ${response.status}`);
@@ -71,26 +69,28 @@ export default function Quiz() {
         if (isFinished) {
             getResponses();
         }
-    }, [isFinished, location.state]);
+    }, [isFinished]);
 
     return (
             <div className='container'>
                 {!responses.length ?
                     <>
-                        <h2 className="center teal-text">{questionIndex + 1} of {finalQuestion + 1}</h2>
-                        <h3 className="teal-text">Question</h3>
-                        <p className="mb-6 pb-6">{responseData.questions[questionIndex]}</p>
-                        <h3 className="mt-6 pt-6 teal-text">Your Answer</h3>
-                        <form className="input-field col s12">
-                            <input type='text' id='response' name='response'
-                                value={answers[questionIndex] || ""} onChange={answerHandler}>
-                            </input>
-                            <label htmlFor='response'>Answer</label>
-                        </form>
-                        <button className="btn" onClick={nextHandler}>SUBMIT ANSWER</button>
+                        <div id='quiz'>
+                            <h2 className="center teal-text">{questionIndex + 1} of {finalQuestion + 1}</h2>
+                            <h3 className="teal-text">Question</h3>
+                            <p className="mb-6 pb-6">{responseData.questions[questionIndex]}</p>
+                            <h3 className="mt-6 pt-6 teal-text">Your Answer</h3>
+                            <form className="input-field col s12">
+                                <input type='text' id='response' name='response'
+                                    value={answers[questionIndex] || ""} onChange={answerHandler}>
+                                </input>
+                                <label htmlFor='response'>Answer</label>
+                            </form>
+                            <button style={{margin: '0 0 50px'}} className="btn" onClick={nextHandler}>SUBMIT ANSWER</button>
+                        </div>
+                        <p id="msg"></p>
                     </>
                     : <>
-                    {console.log('responses', responses)}
                         <h2 className="center teal-text">{evaluationIndex + 1} of {finalQuestion + 1}</h2>
                         <h3 className="teal-text">Question</h3>
                         <p className="mb-6 pb-6">{responseData.questions[evaluationIndex]}</p>
@@ -103,9 +103,11 @@ export default function Quiz() {
                         <button className="btn">SUBMIT ANSWER</button>
                         <div>
                             <h3 className="teal-text">{responseData.style}&apos;s Evaluation</h3>
-                            <p>{responses?.[evaluationIndex].substring(0, 2).toLowerCase() !== 'no' ? 'Correct' : 'Incorrect'}</p>
-                            <p>{responses?.[evaluationIndex]}</p>
-                            <button className="btn" onClick={nextEvaluationHandler}>NEXT</button>
+                            <div className='row'>
+                                <p className="col s6">{responses?.[evaluationIndex].substring(0, 2).toLowerCase() !== 'no' ? 'Correct' : 'Incorrect'}</p>
+                                <p className="col s6">{responses?.[evaluationIndex]}</p>
+                            </div>
+                            <button style={{margin: '0 0 50px'}} className="btn" onClick={nextEvaluationHandler}>NEXT</button>
                         </div>
                     </>
                 }

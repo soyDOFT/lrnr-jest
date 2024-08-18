@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom';
-import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css';
 
 
@@ -126,14 +125,13 @@ function QuizzForm() {
                     <div className="input-field col s12">
                         <select name="style" id="style" value={formData.style} onChange={handleChange}>
                             <option value="" disabled></option>
-                            <option value="Master Oogoway">Master Oogoway</option>
-                            <option value="1940s gangster">1940s Gangster</option>
-                            <option value="Like I'm an 8 year old">Like I'm an 8-Year-Old</option>
-                            <option value="Normal">Normal</option>
-                            <option value="Jedi">Jedi</option>
-                            <option value="Captain Jack Sparrow">Captain Jack Sparrow</option>
-                            <option value="Matthew McConaughey">Matthew McConaughey</option>
-                            <option value="Audi">Audi</option>
+                            <option value="Master Oogoway">master oogway</option>
+                            <option value="1940s gangster">1940s gangster</option>
+                            <option value="Like I'm an 8 year old">like i'm an 8 year old</option>
+                            <option value="Normal">normal</option>
+                            <option value="Jedi">jedi</option>
+                            <option value="Captain Jack Sparrow">captain jack sparrow</option>
+                            <option value="Matthew McConaughey">matthew mcconaughey</option>
                         </select>
                         <label htmlFor="style">Style of Questions</label>
                     </div>
