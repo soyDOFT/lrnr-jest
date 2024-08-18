@@ -16,9 +16,9 @@ function QuizzForm() {
     const navigate = useNavigate(); ///store the useNavigate functioin in variable navigate
     const [formData, setFormData] = useState({
         topic: '',
-        expertise: '',
-        numOfQuestions: '',
-        styleOfQuestions: ''
+        level: '',
+        questionNum: '',
+        style: ''
     });
 
     
@@ -71,9 +71,8 @@ function QuizzForm() {
           }
       
           const responseData = await response.json(); // Process the JSON data from the response
-          console.log(responseData);
       
-          navigate('/quiz', { state: { responseData } }); // Navigate with formData and responseData
+          navigate('/quiz', { state: { responseData, formData } }); // Navigate with formData and responseData
       
         } catch (error) {
           console.error('Error in handleSubmit:', error); // Log the error message
@@ -105,27 +104,27 @@ function QuizzForm() {
                     </div>
 
                     <div className="input-field col s12">
-                        <select name="expertise" id="expertise" value={formData.expertise} onChange={handleChange}>
+                        <select name="level" id="level" value={formData.level} onChange={handleChange}>
                             <option value="" disabled></option>
                             <option value="Novice">Novice</option>
                             <option value="Intermediate">Intermediate</option>
                             <option value="Expert">Expert</option>
                         </select>
-                        <label htmlFor="expertise">Expertise</label>
+                        <label htmlFor="level">Expertise</label>
                     </div>
 
                     <div className="input-field col s12">
-                        <select name="numOfQuestions" id="numOfQuestions" value={formData.numOfQuestions} onChange={handleChange}>
+                        <select name="questionNum" id="questionNum" value={formData.questionNum} onChange={handleChange}>
                             <option value="true" disable={true}></option>
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
                         </select>
-                        <label htmlFor="numOfQuestions">Number of Questions</label>
+                        <label htmlFor="questionNum">Number of Questions</label>
                     </div>
 
                     <div className="input-field col s12">
-                        <select name="styleOfQuestions" id="styleOfQuestions" value={formData.styleOfQuestions} onChange={handleChange}>
+                        <select name="style" id="style" value={formData.style} onChange={handleChange}>
                             <option value="" disabled></option>
                             <option value="Master Oogoway">Master Oogoway</option>
                             <option value="1940s gangster">1940s Gangster</option>
@@ -136,7 +135,7 @@ function QuizzForm() {
                             <option value="Matthew McConaughey">Matthew McConaughey</option>
                             <option value="Audi">Audi</option>
                         </select>
-                        <label htmlFor="styleOfQuestions">Style of Questions</label>
+                        <label htmlFor="style">Style of Questions</label>
                     </div>
                 </div>
                 <div className="left-align">
