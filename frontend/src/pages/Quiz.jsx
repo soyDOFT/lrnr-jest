@@ -21,7 +21,8 @@ export default function Quiz() {
         answers[questionIndex] = e.target.value;
         setAnswers([...answers]);
     }
-    const nextHandler = () => {
+    const nextHandler = (e) => {
+        e.preventDefault();
         if (!isFinished) setQuestionIndex(questionIndex + 1);
 
         if (questionIndex === finalQuestion) {
@@ -31,7 +32,8 @@ export default function Quiz() {
         }
     }
 
-    const nextEvaluationHandler = () => {
+    const nextEvaluationHandler = (e) => {
+        e.preventDefault();
         if (!isEvaluationFinished) {
             setEvaluationIndex(evaluationIndex + 1);
         } else {
@@ -80,13 +82,13 @@ export default function Quiz() {
                             <h3 className="teal-text">Question</h3>
                             <p className="mb-6 pb-6">{responseData.questions[questionIndex]}</p>
                             <h3 className="mt-6 pt-6 teal-text">Your Answer</h3>
-                            <form className="input-field col s12">
+                            <form onSubmit={nextHandler} className="input-field col s12">
                                 <input type='text' id='response' name='response'
                                     value={answers[questionIndex] || ""} onChange={answerHandler}>
                                 </input>
                                 <label htmlFor='response'>Answer</label>
+                                <button style={{margin: '0 0 50px'}} className="btn">SUBMIT ANSWER</button>
                             </form>
-                            <button style={{margin: '0 0 50px'}} className="btn" onClick={nextHandler}>SUBMIT ANSWER</button>
                         </div>
                         <p id="msg"></p>
                     </>
@@ -101,14 +103,14 @@ export default function Quiz() {
                             </input>
                         </form>
                         <button className="btn">SUBMIT ANSWER</button>
-                        <div>
+                        <form onSubmit={nextEvaluationHandler}>
                             <h3 className="teal-text">{responseData.style}&apos;s Evaluation</h3>
                             <div className='row'>
                                 <p className="col s6">{responses?.[evaluationIndex].substring(0, 2).toLowerCase() !== 'no' ? 'Correct' : 'Incorrect'}</p>
                                 <p className="col s6">{responses?.[evaluationIndex]}</p>
                             </div>
-                            <button style={{margin: '0 0 50px'}} className="btn" onClick={nextEvaluationHandler}>NEXT</button>
-                        </div>
+                            <button style={{margin: '0 0 50px'}} className="btn">NEXT</button>
+                        </form>
                     </>
                 }
             </div>
