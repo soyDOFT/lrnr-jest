@@ -53,7 +53,7 @@ function QuizzForm() {
         
       
         try {
-          const response = await fetch('/api/quiz', {
+          const response = await fetch('https://open-ai-7.onrender.com/api/quiz', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
