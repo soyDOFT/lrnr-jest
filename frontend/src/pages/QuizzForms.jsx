@@ -53,7 +53,7 @@ function QuizzForm() {
         
       
         try {
-          const response = await fetch('http://localhost:8000/api/quiz', {
+          const response = await fetch('/api/quiz', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
