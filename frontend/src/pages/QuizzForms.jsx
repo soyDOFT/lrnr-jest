@@ -49,11 +49,11 @@ function QuizzForm() {
         //check url to make sure its spelled correclty
         //console.log results and form to make sure whats being passed along is the correct information
 
-
-        
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('quizform').style.display = 'none';
       
         try {
-          const response = await fetch('https://open-ai-7.onrender.com/api/quiz', {
+          const response = await fetch('/api/quiz', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -83,64 +83,77 @@ function QuizzForm() {
     
 
     return (
-        <div className="container">
-            <h2 className="left-align">Quiz Generator Options</h2>
-            <p className="left-align">Choose your preferences below to generate your personalized quiz</p>
-            <form onSubmit={handleSubmit} className="col s12">
-                <div className="row">
-                    <div className="input-field col s12">
-                        <select name="topic" id="topic" value={formData.topic} onChange={handleChange}>
-                            <option value="" disabled></option>
-                            <option value="goLang">GoLang</option>
-                            <option value="AWS">AWS</option>
-                            <option value="JavaScript">JavaScript</option>
-                            <option value="CI/CD">CI/CD</option>
-                            <option value="Home gardens">Home Gardens</option>
-                            <option value="Coffee">Coffee</option>
-                            <option value="Finger Foods">Finger Foods</option>
-                        </select>
-                        <label htmlFor="topic">Topic</label>
-                    </div>
+        <>
+            <div className="container" id="quizform">
+                <h2 className="left-align">Quiz Generator Options</h2>
+                <p className="left-align">Choose your preferences below to generate your personalized quiz</p>
+                <form onSubmit={handleSubmit} className="col s12">
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <select name="topic" id="topic" value={formData.topic} onChange={handleChange}>
+                                <option value="" disabled></option>
+                                <option value="goLang">GoLang</option>
+                                <option value="AWS">AWS</option>
+                                <option value="JavaScript">JavaScript</option>
+                                <option value="CI/CD">CI/CD</option>
+                                <option value="Home gardens">Home Gardens</option>
+                                <option value="Coffee">Coffee</option>
+                                <option value="Finger Foods">Finger Foods</option>
+                            </select>
+                            <label htmlFor="topic">Topic</label>
+                        </div>
 
-                    <div className="input-field col s12">
-                        <select name="level" id="level" value={formData.level} onChange={handleChange}>
-                            <option value="" disabled></option>
-                            <option value="Novice">Novice</option>
-                            <option value="Intermediate">Intermediate</option>
-                            <option value="Expert">Expert</option>
-                        </select>
-                        <label htmlFor="level">Expertise</label>
-                    </div>
+                        <div className="input-field col s12">
+                            <select name="level" id="level" value={formData.level} onChange={handleChange}>
+                                <option value="" disabled></option>
+                                <option value="Novice">Novice</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Expert">Expert</option>
+                            </select>
+                            <label htmlFor="level">Expertise</label>
+                        </div>
 
-                    <div className="input-field col s12">
-                        <select name="questionNum" id="questionNum" value={formData.questionNum} onChange={handleChange}>
-                            <option value="true" disable={true}></option>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                        </select>
-                        <label htmlFor="questionNum">Number of Questions</label>
-                    </div>
+                        <div className="input-field col s12">
+                            <select name="questionNum" id="questionNum" value={formData.questionNum} onChange={handleChange}>
+                                <option value="true" disable={true}></option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                            <label htmlFor="questionNum">Number of Questions</label>
+                        </div>
 
-                    <div className="input-field col s12">
-                        <select name="style" id="style" value={formData.style} onChange={handleChange}>
-                            <option value="" disabled></option>
-                            <option value="Master Oogoway">master oogway</option>
-                            <option value="1940s gangster">1940s gangster</option>
-                            <option value="Like I'm an 8 year old">like i'm an 8 year old</option>
-                            <option value="Normal">normal</option>
-                            <option value="Jedi">jedi</option>
-                            <option value="Captain Jack Sparrow">captain jack sparrow</option>
-                            <option value="Matthew McConaughey">matthew mcconaughey</option>
-                        </select>
-                        <label htmlFor="style">Style of Questions</label>
+                        <div className="input-field col s12">
+                            <select name="style" id="style" value={formData.style} onChange={handleChange}>
+                                <option value="" disabled></option>
+                                <option value="Master Oogoway">master oogway</option>
+                                <option value="1940s gangster">1940s gangster</option>
+                                <option value="Like I'm an 8 year old">like i'm an 8 year old</option>
+                                <option value="Normal">normal</option>
+                                <option value="Jedi">jedi</option>
+                                <option value="Captain Jack Sparrow">captain jack sparrow</option>
+                                <option value="Matthew McConaughey">matthew mcconaughey</option>
+                            </select>
+                            <label htmlFor="style">Style of Questions</label>
+                        </div>
+                    </div>
+                    <div className="left-align">
+                        <button type="submit" className="btn waves-effect waves-light">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div className='row valign-wrapper' style={{height: '100%'}}>
+                <div className='col m6 offset-m5'>
+                    <div style={{display: 'none'}} id='loading' className="preloader-wrapper big active">
+                        <div className="spinner-layer spinner-green-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="left-align">
-                    <button type="submit" className="btn waves-effect waves-light">Submit</button>
-                </div>
-            </form>
-        </div>
+            </div>
+        </>
     );
 }
 
