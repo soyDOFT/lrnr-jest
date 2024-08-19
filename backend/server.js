@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const OpenAI = require('openai');
-const client = new OpenAI({apiKey: process.env.OPENAI_KEY || 'test'})
+const client = new OpenAI({apiKey: process.env.OPENAI_KEY || "test"})
 
 const app = express();
 const router = express.Router();
@@ -63,6 +63,7 @@ router.post('/results', async (req, res) => {
             Start with either saying 'Yes' if the response is correct or 'No' if the response does not adequately answer the question.
             Then include a detailed paragraph explaining why it is correct or incorrect.
             Do not include double quotes in the paragraph.
+            It is imperative that every response is separated by three commas (,,,).
             
             
             Here are the responses:
@@ -78,6 +79,8 @@ router.post('/results', async (req, res) => {
             Include at least one reference to pop culture per question that ensures it is obvious to the reader that you are ${level}.
 
             Include no other words and do not include ellipses.
+            Redo the responses if every they are not accurately separated by three commas (,,,).
+            Include no spaces or other characters before 'No' or 'Yes' at the beginning. 
             `}
     ]);
         const result = chatCompletion.choices[0].message.content.split(',,,');

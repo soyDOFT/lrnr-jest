@@ -27,27 +27,29 @@ export default function Quiz() {
 
         if (questionIndex === finalQuestion) {
             setIsFinished(true);
-            document.getElementById('msg').innerHTML = 'Loading...';
+            document.getElementById('loading').style.display = 'block';
             document.getElementById('quiz').style.display = 'none';
         }
     }
 
     const nextEvaluationHandler = (e) => {
         e.preventDefault();
-        if (!isEvaluationFinished) {
-            setEvaluationIndex(evaluationIndex + 1);
-        } else {
-            navigate("/results");
-        }
+        if (!isEvaluationFinished) setEvaluationIndex(evaluationIndex + 1);
+        else navigate("/results");
 
-        if (evaluationIndex === finalQuestion - 1) setIsEvaluationFinished(true);
+        if (evaluationIndex === finalQuestion - 1)  setIsEvaluationFinished(true);
+
+        if (evaluationIndex === finalQuestion)  {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('quiz').style.display = 'none';
+        }
     }
 
     useEffect(() => {
         async function getResponses() {
             try {
                 const { formData } = location.state || {};
-                const response = await fetch('https://open-ai-7.onrender.com/api/results', {
+                const response = await fetch('/api/results', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -62,19 +64,17 @@ export default function Quiz() {
                     
                 const results = await response.json();
                 setResponses(results);
-                console.log('results', results);
             } catch (err) {
                 console.error('Error fetching question evaluations', err)
             }
         }
 
-        if (isFinished) {
-            getResponses();
-        }
+        if (isFinished) getResponses();
+
     }, [isFinished]);
 
     return (
-            <div className='container'>
+            <div className='container' style={{height: '100%'}}>
                 {!responses.length ?
                     <>
                         <div id='quiz'>
@@ -90,7 +90,17 @@ export default function Quiz() {
                                 <button style={{margin: '0 0 50px'}} className="btn">SUBMIT ANSWER</button>
                             </form>
                         </div>
-                        <p id="msg"></p>
+                        <div className='row valign-wrapper' style={{height: '100%'}}>
+                            <div className='col m6 offset-m5'>
+                                    <div style={{display: 'none'}} id='loading' className="preloader-wrapper big active">
+                                        <div className="spinner-layer spinner-green-only">
+                                            <div className="circle-clipper left">
+                                                <div className="circle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </>
                     : <>
                         <h2 className="center teal-text">{evaluationIndex + 1} of {finalQuestion + 1}</h2>
@@ -107,12 +117,25 @@ export default function Quiz() {
                             <h3 className="teal-text">{responseData.style}&apos;s Evaluation</h3>
                             <div className='row'>
                                 <p className="col s6">{responses?.[evaluationIndex].substring(0, 2).toLowerCase() !== 'no' ? 'Correct' : 'Incorrect'}</p>
+                                {console.log(responses?.[evaluationIndex].substring(0, 2).toLowerCase())}
                                 <p className="col s6">{responses?.[evaluationIndex]}</p>
                             </div>
                             <button style={{margin: '0 0 50px'}} className="btn">NEXT</button>
                         </form>
-                    </>
+                        <div className='row valign-wrapper' style={{height: '100%'}}>
+                            <div className='col m6 offset-m5'>
+                                    <div style={{display: 'none'}} id='loading' className="preloader-wrapper big active">
+                                        <div className="spinner-layer spinner-green-only">
+                                            <div className="circle-clipper left">
+                                                <div className="circle"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
                 }
             </div>
+            
     )
 }
