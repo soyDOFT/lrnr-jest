@@ -45,7 +45,7 @@ export default function Quiz() {
         async function getResponses() {
             try {
                 const { formData } = location.state || {};
-                const response = await fetch('http://localhost:8000/api/results', {
+                const response = await fetch('/api/results', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
